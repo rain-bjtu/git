@@ -1,0 +1,9 @@
+Sun jdk与Openjdk版本发展历史如下图所示：
+
+
+1、    Openjdk的前身是Sun公司的JDK虚拟机，最初Java标准是由Sun公司制定的，他们也开发出了严格遵循Java标准的Java虚拟机JDK，在当时JDK源代码不是开放的，只是由Sun公司内部的开发者进行维护。当时比较流行的版本是JDK6和JDK7，他们在代码结构和风格上有较大的不同。随着开源成为软件发展的一个必然趋势，在广大开发者和爱好者的呼吁下， 2007年5月9日, Sun公司在GPL V2协议下，开放了JDK7的大部分代码，成立了Openjdk项目，该项目由Openjdk社区来维护，Openjdk社区从理论上来说是独立于Sun公司的。这样就形成了Openjdk的第一个版本——Openjdk7；
+2、    Sun公司在成立Openjdk项目之后，原来的JDK6版本还继续维护，这样Openjdk7和JDK6并行发展。Openjdk7由JDK7代码开源而来，继承了JDK7的代码结构和风格，由Openjdk社区维护；JDK6由Sun公司内部维护。Sun公司JDK6的很多技术来自Openjdk社区，由于社区的Openjdk7与JDK6代码结构有差异，因此技术的迁移产生了很多障碍； JDK6属于非常流行的Java虚拟机版本，在重重因素的驱使下，Openjdk社区在Openjdk7发展到第22个发行版的时候，从该发行版建立了另外一个分支，也就是我们现在普遍使用的Openjdk6；
+3、    Openjdk6使用了与Sun JDK6统一的代码结构，并兼容Java SE 6标准，因此Sun公司的内部维护与社区的技术也就实现了很方便的融合。这样，随着时间的推移，Openjdk6、Openjdk7和JDK6三个版本各自独立地发展着，也各自逐步完善起来，Openjdk6与Openjdk7开源，由Openjdk社区开发者维护，JDK6由Sun公司内部维护。其中Openjdk6继承了Openjdk7强大的功能、较高的效率以及JDK6优秀的代码风格，渐渐成为开源Java虚拟机的主流版本；
+4、    Sun jdk中包含有部分第三方代码，这部分代码并没有开放，Sun只是以二进制插件的形式对开发者提供，因此Openjdk还有一部分代码是闭源的，这些代码以二进制插件的形式存在。这样，在Openjdk的基础上，逐渐成立了另外一个项目——IcedTea，IcedTea项目开放了全部的二进制插件，是全部开源的Java虚拟机版本。
+兼容性
+    Openjdk6是sun jdk的开源版本，符合Java SE 6标准，因此与sun jdk6完全兼容。在内部实现上的类库有微小差别，用户使用上的API（应用程序接口）没有区别，因此两个平台间可以无缝迁移。使用到有差别类库的情况很少，并不能一概而论，需要在应用过程中分情况区别对待。
