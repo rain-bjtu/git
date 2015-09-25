@@ -1,0 +1,7 @@
+git config --global user.email "your_email@example.com"
+
+git config --global user.name 'fly snow'
+
+git config --global core.editor vim
+
+git config --global color.ui true
