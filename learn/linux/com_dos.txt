@@ -1,0 +1,821 @@
+命令前加上\，可以忽略掉alias的指定参数，ls=ls --color=auto，而\ls=ls，不等于ls --color=auto
+
+whereis 是查找完整文件名
+locate 是查找关键字
+which 是查找命令所在目录，type是区分bash命令和非bash命令
+file 是查看文件类型
+df 是查看磁盘挂载
+du 是查看磁盘容量
+du -sm /home/*   以MB查看/home文件夹总容量
+fdisk 磁盘分区 < 2TB
+parted 磁盘分区 > 2TB
+mkfs 磁盘格式化
+dumpe2fs -h 查看卷标
+e2label 修改卷标
+hdparm -Tt /dev/sdb 测试硬盘读取性能
+tar -jcv -f 打包压缩
+tar -jtv -f 查看文件
+tar -jxv -f 解压缩   -j是bzip2  -z是gzip
+tar -jxv -f 解压缩文件 -C 解压目录
+
+
+chgrp [-R] groupname dirname/filename
+chown [-R] username  filename
+chmod -R xxx filename
+chmod 777 .bashrc
+chmod u=rwx,go=rx .bashrc
+chmod a+w .bashrc
+
+
+
+modprobe
+
+chattr [+-=][ai] file|dir   设置隐藏属性   a 是只能增加，不能修改、删除； i 是不能删除、修改、添加、改名
+lsattr file|dir    显示隐藏属性
+
+date --date=20060401 +%s   转换成秒数
+
+sudo -u rain sh -c "mkdir ww; cd ww; echo 'new file' > newfile.txt"     sh -c 后接一串命令
+
+---------配置文件---------
+/etc/sysconfig/i18n 语系数据
+/etc/fstab 启动自动挂载配置文件
+/etc/issue  tty bash登录显示的欢迎信息
+/etc/motd   用户登录后显示的信息
+/etc/sudoers  文件内的用户可以使用sudo，使用visudo编辑
+/etc/services  端口服务对应表
+/etc/init.d/*  启动脚本放置处
+/var/run/*     各服务程序PID记录出
+
+
+
+-------端口-------------
+
+www	80
+ftp	21
+ssh	22
+telnet  23
+smtp    25
+
+
+
+mount -o loop /home/rain/brasero.iso /mnt 挂载.iso文件
+umount /mnt 卸载
+
+yum install "@Chinese Support"
+yum search xxx
+
+find /home -nouser
+find /home -user name
+find /home -name filename
+find /home -perm +6000
+find /home -perm +7000 -exec ls -l {} \;
+find /home -size +1M
+
+ln -s source destination_l
+
+
+---------文件类型----------
+b 块设备文件，即存储设备，例如 硬盘 软盘
+c 字符设备文件，即串行端口的接口设备，例如 键盘 鼠标
+s 套接字，数据接口文件
+p 管道文件FIFO
+l 软链接文件
+-------------------------
+
+
+--------变量-------------
+alias 相反的是unalias
+
+echo $variable  或者  echo ${variable}
+变量内容有空格可使用“或者‘，
+”内的特殊字符如$等，可以保有原本的特性
+'内的特殊字符则仅为纯文本
+
+$(命令)  or   `命令`
+$((计算式))
+
+PATH="$PATH":/home/bin   or   PATH=${PATH}:/home/bin   追加内容，其中：是PATH中的分割符
+
+取消变量为  unset 变量名
+
+-------------------------
+
+env  查看环境变量
+set  查看环境变量与自定义变量
+
+echo $?  查看上一个命令的回传码
+
+read -p 提示语如“how are you”，如果没有空格可以不加“”  -t 秒数  variable   变量读入
+
+
+history
+!66     执行history的第66条命令
+!al     执行history以al开头的命令
+
+
+source 配置文件名     因为配置文件都是在登录时读取，使用source不用注销，立即使用该配置
+
+
+ctrl+u  ctrl+？  将该行命令删除
+
+
+标准输入（stdin）：代码为0，使用< or <<
+标准输出（stdout）：代码为1，使用> or >>
+标注错误输出（stderr）：代码为2，使用2> or 2>>
+tee 双向重定向
+tee -a 追加
+last | tee last.list | cut -d ' ' -f1
+/dev/null     吃掉任何输出信息
+
+find /home -name .bashrc > list 2>&1
+find /home -name .bashrc &> list      这两个是将错误输出、正确输出都写入list中
+
+cat > catfile < ~/.bashrc        cat创建文件，并写入
+cat > catfile << "eee"      当输入eee后，输入就结束
+
+
+
+cut		echo $PATH | cut -d ':' -f 3,5    取出第3、5段       
+cut		export | cut -c 12-   取出12个字符后的输出           
+
+grep '查找字符串' filename         -i 忽略大小写 -v 反向grep -n 输出行号 -c 计算找到的次数   -A 同时显示after行  -B  显示befor几行
+grep 'MANPATH' /etc/man.config    
+
+sed -i 后加文件 ‘2，6d’  a 下一行增加  i 前一行增加 s 替换字符 c 替换行
+sed -e '4d' -e '6c no six line'     两个以上动作时要加-e
+
+awk  '条件1 {动作1} 条件2 {动作2} ...'  filename
+$0  当前行   $1  第1列   $2  第2列    NF  当前行列数    NR  当前行数     FS   分割符
+awk 'BEGIN {FS=":"}  $3 < 10  {print $1 "\t" $3}'
+
+
+printf  '%10s %s %i %8.2f \n'  $(cat print.txt)
+
+
+diff -b 忽略空格不同 -B 忽略空白行 -i 忽略大小写
+cmp 以字符为单位比较  diff 以行为单位比较
+
+------------排序--------------
+sort -f 忽略大小写 -n 使用纯数字排序 -r 反向排序 -u 就是uniq -t 分割符 -k 以那个区间排序
+cat /etc/passwd | sort -t ':' -k 3 -n  第3区间以数字排序
+uniq -i 忽略大小写 -c 进行计数
+wc -l 统计行数 -w 统计words -m 统计chars      
+----------------------------
+
+-----------字符转换---------
+tr -d 删除 -s 替换
+tr 'a-z' 'A-Z'  小写变大写
+cat /etc/passwd | tr -d ':'
+col -x 将tab转换成对等的空格
+expand -t 6 file 设置成tab=6个空格距离
+unexpand 将空格转换成tab
+join 将文档中相同数据合并，...
+paste -d 分割符，默认tab file1 file2  将file1和file2的两行贴在一起，以分割符分割
+split -b大小分割，单位为b，k，m    -l 行分割  file   将file分割成数个
+cat termcap* >> termcapback    将termcap开头的数个文件合并成termcapback
+-----------------------------
+
+子进程中运行.sh
+sh  test.sh
+./test.sh
+父进程中运行.sh
+source test.sh
+
+
+
+
+^M 是 \r
+^I 是 tab
+
+. = 一个任意字符
+a* = 空  a  aa  aaa  aaaa ......
+aa* = a  aa  aaa  aaaa  ......
+.* = 任意字符，包括空
+
+
+
+$#	参数个数
+$@	代表"$1 $2 $3 ..."
+$0	命令行
+
+if [ situation1 ]; then
+elif [ situation2]; then
+else
+fi
+
+
+case $varible in
+     "varible content")
+	  ;;
+     "varible content")
+	  ;;
+     *)
+	  ;;
+esac
+
+
+function printit()
+{
+	echo -n "Your choice is "  #-n 不断行，在同一行显示
+}
+
+
+while [ condition ]
+do
+done
+
+until [ condition ]
+do
+done
+
+for i in $(seq 1 100)    # or {1..100},但是不同于(seq 1 100)。可以是my{1..100}
+do
+done
+
+for ((i=1;i<=100;i=i+1))
+do 
+done
+
+sh -n 不执行，检查语法   -v 打印内容，运行   -x 每步语句执行结果输出
+
+
+---------帐号--------
+/etc/passwd 1	 2	3	4	5		6	7
+	    用户  密码	UID	初始GID	rain.fly	主文件夹	shell
+
+/etc/shadow 1	 2	3			4		5		6		7				8			9
+	    用户  密码	最近改密码日期1970	这几天不可改	密码过期内天数	快到过期警告天数	过期后宽限天数，过后密码失效	超过这个天数账号失效1970	保留
+
+/etc/group	1	2		3	4
+		用户组名	密码		GID	支持账号
+/etc/gshadow	1	2		3	4
+		用户组名	管理员密码	管理员	支持账号		若2是！，表示无用户组管理员
+
+
+groups	查看有效用户组
+newgrp grpname  在子shell中切换有效用户组为grpname
+
+
+passwd -l rain  账号失效
+passwd -u rain  账号恢复
+passwd -S rain  查看密码状态
+
+
+who  查看谁在线
+w    查看谁在线
+last 查看这几个月谁上线
+lastlog   每个账号（包括服务账号）最近登录时间
+
+-------在线对谈------------
+write   内容以ctrl+D结束，消息会打断用户
+mesg    设置及查看接收消息
+wall    广播信息
+-------------------------
+
+finger 查看用户信息，登录时间
+chfn   =change finger，修改用户信息
+
+id     查看UID、GID、用户组，可以查看是否有该账号
+
+
+ACL   access control list   可以具体设置某个用户、某个用户组的rwx权限
+getfacl
+setfacl
+
+
+
+/etc/at.deny
+at now + 5 minutes        ctrl+D结束
+atq      查询主机有多少at工作调度
+atrm 2   将第2个工作调度删除
+
+/etc/cron.deny
+crontab -e  编辑crontab工作，针对用户
+crontab -l  列出
+crontab -r  将所有crontab任务都删除
+/etc/crontab  编辑crontab工作，针对系统，也可以到cron.daily的文件夹下写script
+/etc/cron.daily...........     编辑crontab工作，针对系统
+
+
+
+chkconfig
+
+
+jobs -l 列出PID   -r 后台run的工作  -s 后台stop的工作
+fg %1
+bg %1
+
+kill -l  列出数字和signal的对应关系
+kill -9 %2   强制结束    -15 是正常结束   -1 是重新启动
+
+killall  -i 交互式  -I 忽略大小写   kill需要知道PID，而killall只需知道命令名即可
+kill -1 12345   killall -i -1 syslogd     -1 是重新启动
+
+
+nohup 加 命令   脱机下仍可进行，与终端无关
+
+
+ps -l    查看自己bash相关进程
+ps aux   查看系统所有进程
+ps -lA   同ps -l，但是查看的是所有进程
+ps axjf  以进程树的方式显示
+
+ps       可以查看 PID
+echo $$  显示bash的 PID
+
+pstree   -A 以ASCII字符來链接  -U 以utf8來链接   -p 同时列出PID   -u 同时列出账号名
+pstree -Aup 查找进程之间的相关性 
+
+
+
+top -d 间隔（秒数） -p 指定PID
+top -d 2 -p 13639(PID)    进入top后，按r修改nice值，输入P以cpu的使用资源排序，M以内存的使用资源排序，N以PID排序，q离开
+
+nice -n(后接数字) command   
+nice -n -5 vi &      将vi的nice值设为-5，并放到后台
+renice number PID  调整nice值
+renice 10 18625
+
+
+free  -b bytes  -k KB  -m MB  -g GB   系统资源查看
+uname -a 所有信息  -r  内核版本
+lsb_release -a   查看centos版本
+uptime   查看开机了多久，工作负荷
+dmesg    分析内核产生的信息
+vmstat   检测系统资源变化
+
+fuser    查找那个程序在使用该文件   -muv
+lsof     列出被进程打开的文件
+pidof    查找某个进程的  PID
+
+
+getenforce   查看SELinux目前模式
+sestatus     查看SELinux是否开启
+chcon        设置文件的安全上下文类型
+
+
+service [service name] (start|stop|restart|...)   启动stand alone服务
+service --status-all   将系统所有的stand alone的服务状态全部列出来
+
+vim /etc/xinetd.d/*   disable=yes|no    先设置配置文件，然后启动xinetd。或者   chkconfig servename on  然后启动xinetd。
+/etc/init.d/xinetd restart   or   service xinetd restart   启动super daemon方式
+
+
+/etc/hosts.allow  优先于   /etc/hosts.deny   设置拒绝IP，具有TCP Wrappers的服务才有用
+
+netstat -tlnup     t 是tcp  u 是udp  查看开启的服务端口
+
+chkconfig --list [服务名称]   查看开机启动项
+chkconfig [--level [0123456]] [服务名称] [on|off]   设置开机启动项
+ntsysv    可视化开机启动项
+chkconfig --[add|del] myself   把自己的程序加入chkconfig管理，myself需放入/etc/init.d/当中
+
+
+
+
+run level
+0	关机
+1	单用户维护模式
+2	类似3，但无NFS服务
+3	完整的纯文本模式
+4	保留
+5	X Window
+6	重启
+
+
+
+/etc/rc.d/rc.local    自己的shell script写入此，开机自运行
+
+
+
+lspci  [-vvn]    列出pci接口设备   -v 显示的详细  -vv 显示的更详细  -n 查看pci的id
+lsusb  [-t]      列出usb接口设备   -t 类似树状显示usb相关性
+iostat           硬盘由开机到现在存取多少数据
+
+
+./configure
+make clean
+make
+make install
+
+
+将动态函数库加载到高速缓存中
+vim /etc/ld.so.conf  ->   写入  /usr/lib/mysql 然后执行:
+ldconfig
+ldconfig -p   列出/etc/ld.so.cache 中所有函数库数据内容
+
+ldd   （library dependency discovery）   查询某个程序的动态函数库支持状态
+ldd [-v] $(which sshd httpd)     -v 列出所有内容信息
+
+
+md5sum
+sha1sum
+
+
+rpm -ivh package_name       -i  install的意思   v 查看安装信息  h 显示安装进度
+rpm -Uvh  升级，如果没有安装过，则安装后升级
+rpm -Fvh  升级，如果没有安装过，则不安装
+
+rpm -qa   列出所有安装的软件
+rpm -q  soft_name  查询是否安装
+rpm -qi soft_name  列出软件的详细信息
+rpm -ql soft_name  列出软件所有文件与目录所在完整文件名
+rpm -qc soft_name  列出软件的所有配置文件
+rpm -qd soft_name  找出与man有关的文件
+rpm -qR soft_name  列出与软件有关的依赖软件所含文件
+rpm -qf file_name  找出该文件属于哪一个已安装软件
+
+rpm -qp[icdR]  意思同上，-p是针对为安装的软件
+
+rpm -e  soft_name  删除软件
+
+rpm --rebuilddb    重建属性依赖数据库
+
+
+
+更新及安装：
+yum install package 安装指定的安装包package
+yum localinstall package 本地安装软件包
+yum update 全部更新
+yum update package 更新指定程序包package
+yum check-update 检查可更新的程序
+yum groupinstall "Development Tools"
+
+查找和显示
+yum info <package> 显示安装包信息
+yum list           显示所有已经安装和可以安装的程序包
+yum list <package> 显示指定程序包安装情况
+yum list updates   显示可以升级的软件
+yum search <keyword>查找软件包
+
+yum grouplist      显示所有已经安装和可以安装的软件组
+yum groupinfo      显示软件组信息
+
+yum remove soft_name
+
+
+容器 镜像站点
+/etc/yum.repos.d/CentOS-Base.repo
+
+yum makecache   修改镜像容器后需要
+
+
+
+------------------------------------------------------------------------硬件信息------------------------------------------------------------------------------
+lscpu          查看CPU
+free           查看内存
+dmidecode -t memory     查看内存硬件信息
+lsblk          查看硬盘和分区分布
+lspci | grep -i 'eth'   查看网卡硬件信息
+ifconfig -a    查看系统的所有网络接口    or  ip link show
+ethtool eth0   如果要查看某个网络接口的详细信息，例如eth0的详细参数和指标
+dmidecode -t bios       查看bios信息
+lspci          查看pci信息，即主板所有硬件槽信息。
+
+
+
+
+
+
+
+--------------------------------------------------------------------------网络-------------------------------------------------------------------------------
+
+route -n     查看路由表  -n 以IP形式查看
+arp -[nd] hostname     -n 以IP形式查看arp表   -d 删除
+arp -s hostname        -s 建立静态arp
+
+route [add|del] [-net|-host] [IP|hostname] netmask [mask] [gw|dev]          gw=Geteway
+route del -net 192.168.1.0 netmask 255.255.255.0 dev eth0
+
+/etc/services  端口服务对应表
+
+ifconfig eth0 192.168.0.1 netmask 255.255.255.0 mtu 1500
+iwconfig  同ifconfig,只不过是检查wlan的
+iwlist eth0 scan    扫描wlan
+ifup eth0
+ifdown eth0
+
+dhclient eth0   以DHCP协议去尝试获得IP
+
+dig www.baidu.com    检查DNS，SERVER那一项
+
+/etc/sysconfig/network-scripts/ifcfg-ethx            IP  DHCP  netmask  gateway
+/etc/sysconfig/network                               hostname
+/etc/resolv.conf                                     DNS ip
+/etc/hosts                                           private ip hostnames' alias
+
+
+ping -c2 -t255 -s9000 -W1 -M do 211.71.75.2      s(MTU)  t(TTL) W(seconds)  M do dont
+ip [-s] link show eth0
+ip link set eth0 [up|down|mtu|name|address]
+
+traceroute -[nUITwpig] IP    检测本机至IP去的各节点的链接状态    n 单纯使用IP   U(UDP)  I(ICMP)  T(TCP)  w(seconds)  p(port number) i...  g(Gateway IP)
+traceroute -w1 -n -T www.baidu.com
+
+netstat -[antulpc]   服务端口 a 所有链接状态  n 使用IP和port number   t(TCP) u(UDP)  l 仅列出Listen监听的服务   p 列出PID   c 几秒更新一次
+
+host [-a] hostname [server]   由域名反查IP  a 详细   server 未指定使用默认dns
+host -a www.baidu.com 114.114.114.114
+
+
+ftp [IP|hostname]
+
+
+namp  [扫描类型] [扫描参数] [host|IP范围]       扫描别人主机端口
+[扫描类型]:
+-sT    TCP已建立的链接connect()
+-sS    TCP带有SYN的数据
+-sP    以ping的方式扫描
+-sU    UDP扫描
+-sO    以IP协议扫描
+[IP范围]:
+192.168.0.1   一台
+192.168.0.*   or   192.168.0.0/244    C网
+192.168.0.1-50，60-100，103，200
+
+nmap -sTU localhost    扫描本机的TCP/UDP端口
+nmap -sP  192.168.0.1/24   扫描局域网有几台主机是启动的
+nmap 192.168.0.1       默认扫描TCP端口
+
+
+echo 1 > /proc/sys/net/ipv4/ip_forward     启动路由转发，但是重启后无效
+/etc/sysctl.conf   net.ipv4.ip_forward = 1    and    sysctl -p     开机后具有路由转发功能
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+如果既想获得 RHEL 的高质量、高性能、高可靠性，又需要方便易用(关键是免费)的软件包更新功能，那么 Fedora Project 推出的 EPEL(Extra Packages for Enterprise Linux)正好适合你。EPEL(http://fedoraproject.org/wiki/EPEL) 是由 Fedora 社区打造，为 RHEL 及衍生发行版如 CentOS、Scientific Linux 等提供高质量软件包的项目。
+yum install epel-release
+
+或者 到epel网站下载epel-release-...-noarch.rpm 安装
+
+
+
+Terminator
+
+Ctrl-Shift-o: 水平分割屏幕 
+Ctrl-Shift-e: 垂直分割屏幕 
+Ctrl-Shift-t: 打开新的终端窗口 
+Ctrl-Shift-w: 关闭当前终端窗口 
+Ctrl-Shift-q: 退出Terminator 
+
+
+tmux #开启tmux
+
+tmux ls #显示已有tmux列表（C-b s）
+tmux attach-session -t 数字 #选择tmux
+C-b c 创建一个新的窗口
+C-b n 切换到下一个窗口
+C-b p 切换到上一个窗口
+C-b l 最后一个窗口,和上一个窗口的概念不一样哟,谁试谁知道
+c-b w 通过上下键选择当前窗口中打开的会话
+C-b 数字 直接跳到你按的数字所在的窗口
+C-b & 退出当前窗口
+C-b d 临时断开会话 断开以后,还可以连上的哟:)
+C-b " 分割出来一个窗口 横排
+C-b % 分割出来一个窗口 竖排
+C-b o 在小窗口中切换
+C-b (方向键)
+C-b ! 关闭所有小窗口
+C-b x 关闭当前光标处的小窗口
+C-b t 钟表
+C-b pageup/pagedown     q 退出
+C-b q 查看窗口序号
+
+
+
+
+
+
+
+vim
+
+----------------------------------------
+
+H 屏幕第一行，行首
+M 屏幕中间行，行首
+L 屏幕最后行，行首
+
+gg 文件第一行，行首
+nG 文件第n行，行首
+G  文件最后行，行首
+
+n[enter] 向下移动n行，行首
+n[方向键] 光标移动n
+n[space] 光标后移n
+
+0 Home 该行首
+$ End  该行尾
+
+ctrl+d 屏幕向下移动半页
+ctrl+u 屏幕向上移动半页
+
+----------------------------------------
+
+/word  向下查找
+？word 向上查找
+n      正向查找
+N      反向查找
+
+：n1,n2s/word1/word2/g  n1和n2行之间word2替换word1
+：1,$s/word1/word2/gc   第一行和最后行之间替换，并确认
+
+----------------------------------------
+
+x  删除当前字符
+X  删除前一个字符
+nx 删除向后n个字符
+nX 删除向前n个字符
+
+dd  删除当前行
+ndd 删除向后n行
+dgg 删除第一行到该行
+dG  删除该行到最后行
+dnG 删除第n行到该行
+d0  删除行首到光标
+d$  删除光标到行尾
+
+yy  复制当前行
+nyy 复制向后n行
+ygg 复制第一行到该行
+yG  复制该行到最后行
+ynG 复制第n行到该行
+y0  复制行首到光标
+y$  复制光标到行尾
+
+p 在下一行粘贴
+P 在上一行粘贴
+
+----------------------------------------
+
+J 合并该行和下一行
+
+----------------------------------------
+
+u      撤销
+ctrl+r 重做
+.        重复上一个命令
+
+----------------------------------------
+
+
+i 当前字符前插入
+a 当前字符后插入
+
+I 行首插入
+A 行尾插入
+
+o 在下一行插入新行
+O 在上一行插入新行
+
+r 替换当前字符一次
+R 替换当前字符
+
+----------------------------------------
+
+：n1，n2 w filename 将n1到n2行另存为filename
+：r filename        将filename内容写入当前行后面
+
+----------------------------------------
+
+：set nu   显示行号
+：set nonu 取消行号
+
+----------------------------------------
+
+v       字符选择
+V       行选择
+ctrl+v  块选择
+
+----------------------------------------
+
+vim file1 file2  打开两个文件
+：n              编辑下一个文件
+：N		     编辑上一个文件
+：files	     列出打开的文件
+
+----------------------------------------
+
+：sp		打开该文件新窗口
+：sp file	打开新窗口
+ctrl+w+方向	移动窗口
+
+----------------------------------------
+
+x	删除当前字符
+dw	删除当前字符串
+
+----------------------------------------
+
+
+ZZ      退出
+
+
+窗口 (几乎) 等宽、等高 
+CTRL-W = 
+
+
+
+
+
+
+gcc hello.c   ----->a.out
+gcc -c hello.c   ----->hello.o
+gcc -o filename hello.o   ----->filename is a executable program
+gcc -Wall -c hello1.c hello2.c  ----->Wall produce more compile info
+gcc sin.c -lm -L/lib -L/usr/lib  ----->l is add one function library
+                                 ----->m is libm.so library
+				 ----->L follows lib path.			 
+gcc sin.c -lm -I/usr/include    ----->I follows include file path
+
+
+Makefile grammar:
+目标:目标文件1 目标文件2 ...
+<tab> gcc -o 欲建立的可执行文件 目标文件1 目标文件2 ...
+For example:
+
+LIBS = -lm
+OBJS = main.o haha.o sin_value.o cos_value.o
+main: ${OBJS}
+	gcc -o main ${OBJS} ${LIBS}
+clean:
+	rm -f main ${OBJS}
+
+
+
+
+zip命令可以用来将文件压缩成为常用的zip格式。unzip命令则用来解压缩zip文件。
+
+1. 我想把一个文件abc.txt和一个目录dir1压缩成为yasuo.zip：
+
+＃ zip -r yasuo.zip abc.txt dir1
+
+2.我下载了一个yasuo.zip文件，想解压缩：
+
+# unzip yasuo.zip
+
+3.我当前目录下有abc1.zip，abc2.zip和abc3.zip，我想一起解压缩它们：
+
+＃ unzip abc\?.zip
+
+注释：?表示一个字符，如果用*表示任意多个字符。
+
+4.我有一个很大的压缩文件large.zip，我不想解压缩，只想看看它里面有什么：
+
+# unzip -v large.zip
+
+5.我下载了一个压缩文件large.zip，想验证一下这个压缩文件是否下载完全了
+
+# unzip -t large.zip
+
+6.我用-v选项发现music.zip压缩文件里面有很多目录和子目录，并且子目录中其实都是歌曲mp3文件，我想把这些文件都下载到第一级目录，而不是一层一层建目录：
+
+# unzip -j music.zip
+
+
+
+
+
+hift+Inset就可以了，下面讲一下vim的粘贴板的基础知识，有兴趣的可以看看，应该会有所收获的。 
+vim帮助文档里与粘贴板有关的内容如下： 
+
+1. vim有12个粘贴板，分别是0、1、2、...、9、a、“、＋；用:reg命令可以查看各个粘贴板里的内容。在vim中简单用y只是复制到“（双引号)粘贴板里，同样用p粘贴的也是这个粘贴板里的内容； 
+
+2. 要将vim的内容复制到某个粘贴板，需要退出编辑模式，进入正常模式后，选择要复制的内容，然后按"Ny完成复制，其中N为粘贴板号(注意是按一下双引号然后按粘贴板号最后按y)，例如要把内容复制到粘贴板a，选中内容后按"ay就可以了，有两点需要说明一下： 
+* “号粘贴板（临时粘贴板）比较特殊，直接按y就复制到这个粘贴板中了，直接按p就粘贴这个粘贴板中的内容； 
+* +号粘贴板是系统粘贴板，用"+y将内容复制到该粘贴板后可以使用Ctrl＋V将其粘贴到其他文档（如firefox、gedit）中，同理，要把在其他地方用Ctrl＋C或右键复制的内容复制到vim中，需要在正常模式下按"+p； 
+
+3. 要将vim某个粘贴板里的内容粘贴进来，需要退出编辑模式，在正常模式按"Np，其中N为粘贴板号，如上所述，可以按"5p将5号粘贴板里的内容粘贴进来，也可以按"+p将系统全局粘贴板里的内容粘贴进来。 
+"
+
+
+
+
+
+
+find ./ -name '*.py' | wc -l   模糊查找
+find . -regex '.*\.txt\|.*\.doc\|.*\.mp3'  
+./a.txt  
+./a.doc  
+./a.mp3 
+
+find test -empty  查找空文件
+find ./ ! -name '*.py'  排除查找
+find  /tmp/   -path "/tmp/123" -prune -o -type f  -print         只排除一个目录或者文件
+find  /tmp/ \( -path "/tmp/123" -o -path "/tmp/234" -o -path "/tmp/345" \) -prune -o -type f -print   排除两个或者多个目录或者文件,注意，如果是查找目录时，-path 后面的目录名一定不要带/  如 写成  -path "/tmp/123/" 就错了，而查找文件时，带/ 没有问题。
+find . -name '*.xml' | xargs grep 'number'        查找包含number的文件
+
+find . -name '*.xml' -exec grep number {} \;      查找包含number的内容，查不出文件

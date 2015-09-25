@@ -1,0 +1,102 @@
+------------------------- git clone -------------------------
+
+git clone https://github.com/jquery/jquery.git               克隆版本库的时候，所使用的远程主机自动被Git命名为origin。如果想用其他的主机名，需要用git clone命令的-o选项指定
+git clone -o jQuery https://github.com/jquery/jquery.git     克隆的时候，指定远程主机叫做jQuery
+
+
+
+========================= git clean ========================= 
+
+
+
+
+
+------------------------- git clean -------------------------
+
+git clean -x              删除所有untracted文件，包括ignore文件
+git clean -xe *.pyc       删除所有untracted文件，包括ignore文件，不包括ignore的*.pyc rule，也就是pyc文件不删除
+git clean -f              force 模式
+git clean -d              删除文件夹
+git clean -n              显示将要删除文件
+git clean -X              只删除ignore中的文件，其它untracted文件不删除
+
+========================= git clean ========================= 
+
+
+
+------------------------- git diff -------------------------
+
+git diff a b              a=-, b=+
+git diff                  a=stage, b=work
+git diff --cached         a=repo, b=stage
+git diff HEAD             a=repo, b=work
+
+========================= git diff ========================= 
+
+
+
+------------------------- git show -------------------------
+
+git show --name-only b6a8721       查看log b6a8721 修改了哪些文件
+
+
+
+========================= git show ========================= 
+
+
+
+
+------------------------ git remote ------------------------
+
+git remote -v                                 查看远程主机网址
+git remote show origin                        查看该主机的详细信息
+git remote add <主机名> <网址>                添加远程主机
+git remote rm <主机名>                        删除远程主机
+git remote rename <原主机名> <新主机名>        远程主机的改名
+
+======================== git remote ========================
+
+
+
+
+------------------------ git fetch ------------------------
+
+git fetch origin master             从远程的origin仓库的master分支下载代码到本地的origin master
+git fetch origin master:temp        从远程的origin仓库的master分支下载代码到本地，并新建一个分支temp
+
+
+
+======================== git fetch ========================
+
+
+
+
+------------------------- git log -------------------------
+
+git log -p master.. origin/master     --比较本地master和远程master的区别
+
+
+
+========================= git log =========================
+
+
+
+
+------------------------ git branck ------------------------
+
+git branch -d temp                   删除temp分支
+git branch -D temp                   强制删除temp分支
+
+
+
+======================== git branck ========================
+
+
+
+
+
+
+
+
+
+
