@@ -1,0 +1,3 @@
+foreground:	ab8d0f		yellow		c4a000		default
+
+background:	23292b		black		2E3436		default
