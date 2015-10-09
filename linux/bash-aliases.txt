@@ -1,5 +1,5 @@
 alias cdgi='cd /home/rain/git'
-alias cdpr='cd /home/rain/git/practice'
+alias cdpr='cd /home/rain/practice'
 alias cdle='cd /home/rain/git/learn'
 alias cd2='cd ../../'
 alias cd3='cd ../../..'
