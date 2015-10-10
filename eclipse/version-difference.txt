@@ -1,0 +1,21 @@
+各版本的区别：
+
+
+　　Eclipse IDE for Java Developers
+　　是Eclipse的platform加上JDT插件，用来java开发的
+
+
+　　Eclipse IDE for Java EE Developers
+　　应该是Eclipse的platform加上WTP插件，用来java企业级开发的
+
+
+　　Eclipse IDE for C/C++ Developers
+　　是Eclipse的platform加上CDT插件，用来做C和C++开发的
+
+
+　　Eclipse for RCP/Plug-in Developers
+　　是Eclipse的SDK，主要用来插件开发
+
+
+　　Eclipse Classic
+　　就是原来的Eclipse，还是主要用来开发java

@@ -1,0 +1,16 @@
+under /usr/share/applications/
+[Desktop Entry]
+Name=Eclipse
+Comment=Develop java
+Exec=/opt/eclipse/eclipse %U
+Terminal=false
+Icon=/opt/eclipse/icon.xpm
+Type=Application
+Categories=GTK;Utility;IDE;
+MimeType=text/html;text/xml;application/xhtml_xml;image/webp;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;
+X-Ayatana-Desktop-Shortcuts=NewWindow;
+
+[NewWindow Shortcut Group]
+Name=New Window
+Exec=/opt/eclipse/eclipse
+TargetEnvironment=Unity
